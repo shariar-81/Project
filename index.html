@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Animated Navbar with Login Popup</title>
+    
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Video Background */
+        video.background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1; /* Keeps the video in the background */
+        }
+
+        /* Neon Glow Animation */
+        @keyframes neonGlow {
+            0% { box-shadow: 0 0 10px cyan, 0 0 20px cyan; }
+            50% { box-shadow: 0 0 20px lime, 0 0 40px lime; }
+            100% { box-shadow: 0 0 10px cyan, 0 0 20px cyan; }
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background: rgba(0, 0, 0, 0.8);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            animation: neonGlow 1.5s infinite alternate;
+            z-index: 1000;
+            border-bottom: 2px solid cyan;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: cyan;
+            text-decoration: none;
+            padding: 12px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            position: relative;
+            transition: all 0.3s ease-in-out;
+            text-transform: uppercase;
+        }
+
+        /* Hover Effect */
+        .nav-links a::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: -5px;
+            width: 0;
+            height: 3px;
+            background: cyan;
+            transition: all 0.4s ease-in-out;
+            transform: translateX(-50%);
+            box-shadow: 0 0 10px cyan, 0 0 20px cyan;
+        }
+
+        .nav-links a:hover {
+            color: lime;
+            text-shadow: 0 0 10px lime, 0 0 20px lime;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        /* Login Button */
+        .login-btn {
+            background: none;
+            border: 2px solid cyan;
+            color: cyan;
+            padding: 10px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            position: relative;
+            overflow: hidden;
+            border-radius: 5px;
+            margin-left: 20px; /* Move the button slightly to the right */
+        }
+
+        .login-btn:hover {
+            color: lime;
+            border-color: lime;
+            box-shadow: 0 0 15px lime, 0 0 30px lime;
+        }
+
+        .login-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 255, 255, 0.2);
+            transition: left 0.3s ease-in-out;
+        }
+
+        .login-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Login Popup Style (Initially Hidden) */
+        .login-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            z-index: 1001;
+            width: 300px;
+            animation: neonGlow 1.5s infinite alternate;
+            text-align: center;
+        }
+
+        .login-popup input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid cyan;
+            background: none;
+            color: cyan;
+            font-size: 16px;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .login-popup input:focus {
+            border-color: lime;
+            box-shadow: 0 0 10px lime;
+        }
+
+        .login-popup button {
+            width: 100%;
+            padding: 12px;
+            background: cyan;
+            color: black;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .login-popup button:hover {
+            background: lime;
+            color: black;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 10px 20px;
+            }
+            .nav-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .login-btn {
+                padding: 8px 16px;
+            }
+        }
+
+        /* Hover Effect to Display Popup */
+        .login-container:hover + .login-popup {
+            display: block;
+        }
+
+        /* Login Container */
+        .login-container {
+            display: flex;
+            align-items: center;
+            margin-left: 20px; /* Added margin to the left of the login container */
+            margin-right: 60px;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Background Video -->
+    <video class="background-video" autoplay muted loop>
+        <source src="https://static.videezy.com/system/resources/previews/000/007/313/original/Plexus.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <nav class="navbar">
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Services</a>
+            <a href="#">Portfolio</a>
+            <a href="#">Contact</a>
+        </div>
+        <div class="login-container">
+            <button class="login-btn">Login</button>
+        </div>
+    </nav>
+
+    <!-- Login Popup -->
+    <div class="login-popup">
+        <h3 style="color: cyan;">Login</h3>
+        <input type="text" placeholder="Enter email or number">
+        <input type="password" placeholder="Enter password">
+        <button>Submit</button>
+    </div>
+</body>
+</html>
